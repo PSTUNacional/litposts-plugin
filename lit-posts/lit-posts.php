@@ -16,22 +16,23 @@ function get_lit_posts($atts=[]) {
     $atts = array_change_key_case( (array) $atts, CASE_LOWER );
     $atributes = shortcode_atts(
         array(
-            'lang' => 'es'
+            'lang' => 'es',
+            'total' => 4
         ), $atts
     );
     switch($atributes['lang']){
         case "es":
-            $url = "https://litci.org/es/wp-json/wp/v2/posts";
+            $url = "https://litci.org/es/wp-json/wp/v2/posts?per_page=".$atributes['total'];
             break;
         case "pt":
-            $url = "https://litci.org/pt/wp-json/wp/v2/posts";
+            $url = "https://litci.org/pt/wp-json/wp/v2/posts?per_page=".$atributes['total'];
             break;
     }
     
     $json = json_decode(file_get_contents($url), TRUE);
 
     echo '<div id="litposts-container">';
-    for( $i=0; $i < 4; $i++)
+    for( $i=0; $i < $atributes['total']; $i++)
     {
         render_lit_block($json[$i]);
     }
@@ -39,7 +40,6 @@ function get_lit_posts($atts=[]) {
 }
 
 // Função de renderiação dos blocos
-// o css está todo inline. Essa não é uma boa prática.
 function render_lit_block($object)
 {
     $date = date_format(date_create($object['date']),"Y/m/d");
@@ -58,12 +58,12 @@ function add_litposts_stylesheet() {
     wp_enqueue_style('litposts_style', plugin_dir_url(__FILE__) . 'assets/style.css');
 }
 
-// Adiciona o CSS do plugin no Theme
+// Adiciona o CSS do plugin na fila de scripts
 add_action('wp_enqueue_scripts', 'add_litposts_stylesheet');
 
 #===============================
 #
-#   Habilitando o plugin como shortcode
+#   Habilita o plugin como shortcode
 #
 #===============================
 
