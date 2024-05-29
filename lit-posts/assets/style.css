@@ -1,0 +1,43 @@
+#litposts-container{
+    display:grid;
+    gap:24px;
+    grid-template-columns: repeat(auto-fit, minmax(216px, 1fr));
+    width:100%;
+}
+
+#litposts-container a{
+    display: flex;
+    flex-direction: column;
+    gap:12px;
+    text-decoration: none;
+}
+
+#litposts-container a .img-container{
+    width:100%;
+    height:auto;
+    overflow: hidden;
+    aspect-ratio:16/9;
+}
+
+#litposts-container a .img-container img{
+    object-fit:cover;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    transform: scale(1);
+    transition: all .3s ease-in-out;
+}
+#litposts-container a:hover .img-container img{
+    transform: scale(1.15);
+    transition: all .3s ease-in-out;
+}
+
+#litposts-container a h4{
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+}
+
+#litposts-container a span.date{
+    font-size:0.8rem;
+    color:#0009;
+}
